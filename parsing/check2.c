@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:05:25 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/05 20:18:34 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 17:24:12 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,32 @@ static bool	check_cylinder(t_cylinder	*cylinder)
 
 bool	total_check(t_minirt	*minirt)
 {
-	bool	flag_option;
-	bool	flag_figure;
+	bool		flag_option;
+	bool		flag_figure;
+	t_sphere	*sp;
+	t_plane		*pl;
+	t_cylinder	*cy;
 
 	flag_figure = true;
+	sp = minirt->sphere;
+	pl = minirt->plane;
+	cy = minirt->cylinder;
 	flag_option = check_ambient(minirt->ambient) 
 		&& check_camera(minirt->camera) && check_light(minirt->light);
-	while (minirt->plane)
+	while (pl)
 	{
-		flag_figure = flag_figure && check_plane(minirt->plane);
-		minirt->plane = minirt->plane->next;
+		flag_figure = flag_figure && check_plane(pl);
+		pl = pl->next;
 	}
-	while (minirt->sphere)
+	while (sp)
 	{
-		flag_figure = flag_figure && check_sphere(minirt->sphere);
-		minirt->sphere = minirt->sphere->next;
+		flag_figure = flag_figure && check_sphere(sp);
+		sp = sp->next;
 	}
-	while (minirt->cylinder)
+	while (cy)
 	{
-		flag_figure = flag_figure && check_cylinder(minirt->cylinder);
-		minirt->cylinder = minirt->cylinder->next;
+		flag_figure = flag_figure && check_cylinder(cy);
+		cy = cy->next;
 	}
 	return (flag_figure && flag_option);
 }

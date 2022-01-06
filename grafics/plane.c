@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.c                                           :+:      :+:    :+:   */
+/*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/06 12:19:14 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 18:00:25 by jobject          ###   ########.fr       */
+/*   Created: 2022/01/06 17:21:40 by jobject           #+#    #+#             */
+/*   Updated: 2022/01/06 20:43:03 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-void	mini_rt(t_minirt	*minirt)
+bool	plane_intersection(t_minirt	*minirt, t_coo	vec)
 {
-	// t_coo	coo;
+	float	denom;
+	float	t;
+	t_coo	cam_pl;
 
-	// coo.x = 0;
-	// while (coo.x < WIDTH)
-	// {
-	// 	coo.y = 0;
-	// 	while (coo.y < HEIGHT)
-	// 	{
-	// 		draw_sphere(minirt, coo);
-	// 		draw_plane(minirt, coo);
-	// 		coo.y++;
-	// 	}
-	// 	coo.x++;
-	// }
-	ray_tracing(minirt);
-	// mlx_put_image_to_window(minirt->window->mlx, minirt->window->win,
-	// 	minirt->window->image, 0, 0);
-	mlx_loop(minirt->window->mlx);
+	vec_sub(minirt->camera->coo, minirt->plane->coo, &cam_pl);
+	denom = vec_dot_product(cam_pl, vec);
+	if (fabsf(denom) > 1e-6)
+	{
+		vec_sub(minirt->plane->coo, minirt->ray, &vec);
+		t = vec_dot_product(vec, cam_pl);
+		return (t >= 0);
+	}
+	return (false);
 }

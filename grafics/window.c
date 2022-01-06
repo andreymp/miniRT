@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 12:08:56 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 12:35:50 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:44:46 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_window	*win_init(void)
 	window->win = mlx_new_window(window->mlx, WIDTH, HEIGHT, "./miniRT");
 	window->image = NULL;
 	window->addr = NULL;
-	do_init_image(window);
+	// do_init_image(window);
 	setup_control(window);
 	return (window);
 }

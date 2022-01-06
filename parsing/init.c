@@ -6,13 +6,13 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:55:57 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 13:44:40 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 19:43:36 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-t_vplane	*get_view_plane(float width, float height, float fov)
+t_vplane	*get_view_plane(float width, float height, int fov)
 {
     t_vplane	*vplane;
     float		aspect_ratio;
@@ -21,7 +21,7 @@ t_vplane	*get_view_plane(float width, float height, float fov)
     if (!vplane)
         return(NULL);
     aspect_ratio = width / height;
-    vplane->width = 1;
+    vplane->width = tanf(fov / 2 * (M_PI / 180)) * 2;
     vplane->height = vplane->width / aspect_ratio;
     vplane->x_pixel = vplane->width / width;
     vplane->y_pixel = vplane->height / height;
@@ -88,5 +88,6 @@ t_minirt	*minirt_init(void)
 	ptr->sphere = NULL;
 	ptr->cylinder = NULL;
 	ptr->plane = NULL;
+	ptr->window = NULL;
 	return (ptr);
 }

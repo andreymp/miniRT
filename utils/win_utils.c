@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 12:28:18 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 13:19:02 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 20:48:19 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*to_hex(int	digit, char	*set)
 	char	*hex;
 
 	hex = (char *) malloc(2 * sizeof(char));
-	if (hex)
+	if (!hex)
 		return (NULL);
 	if (digit < 16)
 	{

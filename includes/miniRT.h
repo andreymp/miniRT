@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:40:19 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 13:45:42 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 20:40:48 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,11 @@ typedef struct s_minirt
 	t_sphere	*sphere;
 	t_plane		*plane;
 	t_cylinder	*cylinder;
+	float		x_ray;
+	float		y_ray;
+	float		x_angle;
+    float		y_angle;
+	t_coo		ray;
 }				t_minirt;
 
 t_minirt	*minirt_init(void);
@@ -147,11 +152,14 @@ void		mini_rt(t_minirt	*minirt);
 void		do_init_image(t_window *win);
 void		my_mlx_pixel_put(t_window *win, int x, int y, int color);
 int			rgb_to_hex(t_rgb	rgb);
-t_coo		*new_vector(float x, float y, float z);
-t_coo		*vec_sub(t_coo	*vec1, t_coo	*vec2);
-float		vec_length(t_coo	*vec);
+void		new_vector(float x, float y, float z, t_coo	*vec);
+void		vec_sub(t_coo	vec1, t_coo	vec2, t_coo	*vec);
+float		vec_length(t_coo	vec);
 void		vec_normalized(t_coo	*vec);
-float		vec_dot_product(t_coo	*vec1, t_coo	*vec2);
-t_vplane	*get_view_plane(float width, float height, float fov);
+float		vec_dot_product(t_coo	vec1, t_coo	vec2);
+t_vplane	*get_view_plane(float width, float height, int fov);
+bool		sphere_intersection(t_minirt	*minirt, t_coo	vec);
+void		ray_tracing(t_minirt	*minirt);
+bool		plane_intersection(t_minirt	*minirt, t_coo	vec);
 
 #endif

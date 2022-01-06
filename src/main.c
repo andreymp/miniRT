@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:34:07 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 12:25:10 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 16:34:29 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ int	main(int argc, char	**argv)
 	parse_file(argv[1], &minirt);
 	if (!total_check(minirt))
 		exit_fatal(minirt, "Error");
-	puts("Success");
-	minirt->window = win_init();
-	if (!minirt->window)
-		exit_fatal(minirt, "Allocation failed");
-	mini_rt(minirt);
+	// puts("Success");
 	// puts("----------------Ambient lightning:--------------");
 	// printf("Ratio: %f\nRGB: %d %d %d\n", minirt->ambient->ratio, minirt->ambient->rgb.r, minirt->ambient->rgb.g, minirt->ambient->rgb.b);
 	// puts("---------------------Camera---------------------");
@@ -67,5 +63,9 @@ int	main(int argc, char	**argv)
 	// printf("Diameter: %f\n", minirt->cylinder->diameter);
 	// printf("Height: %f\n", minirt->cylinder->height);
 	// printf("RGB: %d %d %d\n", minirt->cylinder->rgb.r, minirt->cylinder->rgb.g, minirt->cylinder->rgb.b);
+	minirt->window = win_init();
+	if (!minirt->window)
+		exit_fatal(minirt, "Allocation failed");
+	mini_rt(minirt);
 	return (0);
 }
