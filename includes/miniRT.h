@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:40:19 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/05 20:18:46 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 13:45:42 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define HEIGHT 800
 # define WIDTH  1000
+
+# define ESC 53
 
 # include "../libft/libft.h"
 # include "get_next_line.h"
@@ -29,6 +31,7 @@ typedef struct s_rgb
 	int	r;
 	int	g;
 	int	b;
+	int	color;
 }				t_rgb;
 
 typedef struct s_coo
@@ -94,9 +97,17 @@ typedef struct	s_window
 	int		endian;
 }				t_window;
 
+typedef struct	s_vplane
+{
+	float	width;
+	float	height;
+	float	x_pixel;
+	float	y_pixel;
+}				t_vplane;
+
 typedef struct s_minirt
 {
-	t_window	window;
+	t_window	*window;
 	t_ambient	*ambient;
 	t_camera	*camera;
 	t_light		*light;
@@ -131,5 +142,16 @@ bool		check_ambient(t_ambient	*ambient);
 bool		check_camera(t_camera	*camera);
 bool		check_light(t_light	*light);
 bool		total_check(t_minirt	*minirt);
+t_window	*win_init(void);
+void		mini_rt(t_minirt	*minirt);
+void		do_init_image(t_window *win);
+void		my_mlx_pixel_put(t_window *win, int x, int y, int color);
+int			rgb_to_hex(t_rgb	rgb);
+t_coo		*new_vector(float x, float y, float z);
+t_coo		*vec_sub(t_coo	*vec1, t_coo	*vec2);
+float		vec_length(t_coo	*vec);
+void		vec_normalized(t_coo	*vec);
+float		vec_dot_product(t_coo	*vec1, t_coo	*vec2);
+t_vplane	*get_view_plane(float width, float height, float fov);
 
 #endif

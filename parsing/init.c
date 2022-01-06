@@ -6,11 +6,27 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:55:57 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/05 18:38:50 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 13:44:40 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
+
+t_vplane	*get_view_plane(float width, float height, float fov)
+{
+    t_vplane	*vplane;
+    float		aspect_ratio;
+
+    vplane = (t_vplane *) malloc(sizeof(t_vplane));
+    if (!vplane)
+        return(NULL);
+    aspect_ratio = width / height;
+    vplane->width = 1;
+    vplane->height = vplane->width / aspect_ratio;
+    vplane->x_pixel = vplane->width / width;
+    vplane->y_pixel = vplane->height / height;
+    return (vplane);
+}
 
 bool	init_coo(char	*str, t_coo	*coo)
 {

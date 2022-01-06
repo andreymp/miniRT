@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 11:34:07 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/05 20:19:25 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/06 12:25:10 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,13 @@ int	main(int argc, char	**argv)
 	check_input(argc, argv);
 	minirt = minirt_init();
 	parse_file(argv[1], &minirt);
-	if (!total_check)
+	if (!total_check(minirt))
 		exit_fatal(minirt, "Error");
 	puts("Success");
+	minirt->window = win_init();
+	if (!minirt->window)
+		exit_fatal(minirt, "Allocation failed");
+	mini_rt(minirt);
 	// puts("----------------Ambient lightning:--------------");
 	// printf("Ratio: %f\nRGB: %d %d %d\n", minirt->ambient->ratio, minirt->ambient->rgb.r, minirt->ambient->rgb.g, minirt->ambient->rgb.b);
 	// puts("---------------------Camera---------------------");
