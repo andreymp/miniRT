@@ -6,55 +6,24 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 12:28:18 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 20:48:19 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/07 15:18:00 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-static char	*to_hex(int	digit, char	*set)
+void	make_color(t_rgb	rgb, int	*color)
 {
-	char	*hex;
-
-	hex = (char *) malloc(2 * sizeof(char));
-	if (!hex)
-		return (NULL);
-	if (digit < 16)
-	{
-		*hex = '0';
-		*(hex + 1) = *(set + digit); 
-	}
-	else
-	{
-		*hex = *(set + digit % 16);
-		digit /= 16;
-		*(hex + 1) = *(set + digit);
-	}
-	return (hex);
+	*color = rgb.r << 16 | rgb.g << 8 | rgb.b;
 }
 
-int	rgb_to_hex(t_rgb	rgb)
+int	get_ambient_color(t_rgb	rgb, float ratio)
 {
-	char	*r;
-	char	*g;
-	char	*b;
-	char	*res;
-	int		hex;
-
-	res = NULL;
-	r = to_hex(rgb.r, "0123456789abcdef");
-	g = to_hex(rgb.g, "0123456789abcdef");
-	b = to_hex(rgb.b, "0123456789abcdef");
-	res = ft_strjoingnl(res, "0x0");
-	res = ft_strjoingnl(res, r);
-	free(r);
-	res = ft_strjoingnl(res, g);
-	free(g);
-	res = ft_strjoingnl(res, b);
-	free(b);
-	hex = (int) res;
-	free(res);
-	return (hex);
+	rgb.r *= ratio;
+	rgb.g *= ratio;
+	rgb.b *= ratio;
+	make_color(rgb, &rgb.color);
+	return (rgb.color);
 }
 
 void	my_mlx_pixel_put(t_window *win, int x, int y, int color)

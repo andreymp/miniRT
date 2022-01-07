@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:43:06 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 16:14:21 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/07 14:48:26 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ bool	check_float(char	*str)
 	int	i;
 
 	i = 0;
+	if (*(str + i) == '-')
+		i++;
 	while (*(str + i) && ft_isdigit(*(str + i)))
 		i++;
 	if (!*(str + i))

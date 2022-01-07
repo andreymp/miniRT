@@ -19,6 +19,7 @@ SRCS =	src/main.c \
 		grafics/RT.c \
 		grafics/sphere.c \
 		grafics/plane.c \
+		grafics/cylinder.c \
 
 INC	= 	libft/libft.h \
 		minilibx/mlx.h \
