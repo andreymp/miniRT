@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:40:19 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/07 15:53:45 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/10 21:15:20 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_coo
 	float	x;
 	float	y;
 	float	z;
+	float	len;
 }				t_coo;
 
 typedef struct t_ambient
@@ -114,6 +115,18 @@ typedef struct s_coeff
 	float	c;
 }			t_coeff;
 
+typedef struct s_scene
+{
+	t_camera	*cam;
+	t_sphere	*sphere;
+	t_cylinder	*cylinder;
+	t_plane		*plane;
+	t_light		*light;
+	float		width;
+	float		height;
+	int			color;
+}			t_scene;
+
 typedef struct s_ray
 {
 	// float t;
@@ -138,6 +151,7 @@ typedef struct s_minirt
 }				t_minirt;
 
 t_minirt	*minirt_init(void);
+t_scene		*init_scene(t_minirt	*minirt);
 void		parse_file(char	*filename, t_minirt	**minirt);
 int			skip_spaces(char	*line, int i);
 void		exit_fatal(t_minirt	*minirt, char	*message);
@@ -174,11 +188,14 @@ float		vec_length(t_coo	vec);
 void		vec_normalized(t_coo	*vec);
 float		vec_dot_product(t_coo	vec1, t_coo	vec2);
 t_vplane	*get_view_plane(float width, float height, int fov);
-bool		sphere_intersection(t_coo	vec, t_minirt	*minirt);
+bool		sphere_intersection(t_coo	vec, t_minirt	*minirt, int *color);
 void		ray_tracing(t_minirt	*minirt);
-bool		plane_intersection(t_minirt	*minirt, t_coo	vec);
+bool		plane_intersection(t_minirt	*minirt, t_coo	vec, int *color);
 bool		cylinder_intersection(t_minirt	*minirt, t_coo	vec);
 float		ft_min(float t1, float t2);
 int			get_ambient_color(t_rgb	rgb, float ratio);
+int			c_add(int c1, int c2);
+int			scale_colors(t_rgb	rgb, float f);
+int			prod_colors(int color1, int color2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 14:33:31 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/07 15:52:23 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/10 21:27:50 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ float ft_min(float t1, float t2)
     return (0);
 }
 
-bool	sphere_intersection(t_coo vec, t_minirt *rt)
+bool	sphere_intersection(t_coo vec, t_minirt *rt, int *color)
 {
     t_coo oc;
     t_coeff c;
@@ -54,5 +54,7 @@ bool	sphere_intersection(t_coo vec, t_minirt *rt)
     // printf("t1 = %f\n", t1);
     t2 = (-c.b - sqrtf(disc)) / (2 * c.a);
     t1 = ft_min(t1, t2);
+	if (t1 >= 0)
+		make_color(rt->sphere->rgb, color);
     return (t1 >= 0);
 }

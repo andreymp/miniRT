@@ -7,6 +7,7 @@ SRCS =	src/main.c \
 		parsing/init.c \
 		utils/utils.c \
 		utils/utils1.c \
+		utils/utils2.c \
 		utils/exits.c \
 		utils/win_utils.c \
 		parsing/parse_figure.c \
@@ -20,6 +21,7 @@ SRCS =	src/main.c \
 		grafics/sphere.c \
 		grafics/plane.c \
 		grafics/cylinder.c \
+		grafics/scene.c \
 
 INC	= 	libft/libft.h \
 		minilibx/mlx.h \
