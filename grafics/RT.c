@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 13:48:02 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/07 19:36:17 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/07 19:55:34 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ray_tracing(t_minirt	*minirt)
 			vec_normalized(&minirt->ray);
 			color = 0; // get_ambient_color(minirt->ambient->rgb, minirt->ambient->ratio);
 			if (plane_intersection(minirt, minirt->ray))
-                color = minirt->plane->rgb.color * compute_light(minirt, minirt->ray); // * make_shadow(minirt, minirt->ray); // * minirt->ambient->ratio;
+                color = minirt->plane->rgb.color * compute_light(minirt, minirt->ray);// * acosf(compute_light(minirt, minirt->ray)) * 180 / M_PI; // * make_shadow(minirt, minirt->ray); // * minirt->ambient->ratio;
 			// if (cylinder_intersection(minirt, minirt->ray))
 			//     color = minirt->cylinder->rgb.color; // * compute_light(minirt, minirt->ray); // * minirt->ambient->ratio;
 			if (sphere_intersection(minirt->ray, minirt))
