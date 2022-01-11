@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 13:48:02 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/10 21:33:50 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/11 20:39:12 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,13 @@ bool	inter(t_minirt	*minirt, t_coo	vec, int	*color)
 	bool		flag;
 	t_plane		*pl;
 	t_sphere	*sp;
-	// t_cylinder	*cy;
+	t_cylinder	*cy;
 
 
 	pl = minirt->plane;
 	sp = minirt->sphere;
-	// cy = minirt->cylinder;
+	cy = minirt->cylinder;
 	flag = false;
-	// while (sp)
-	// {
-	// 	flag |= sphere_intersection(vec, minirt, color);
-	// 	sp = sp->next;
-	// }
 	while (pl)
 	{
 		flag |= plane_intersection(minirt, vec, color);
@@ -38,6 +33,11 @@ bool	inter(t_minirt	*minirt, t_coo	vec, int	*color)
 	{
 		flag |= sphere_intersection(vec, minirt, color);
 		sp = sp->next;
+	}
+	while (cy)
+	{
+		flag |= cylinder_intersection(minirt, vec, color);
+		cy = cy->next;
 	}
 	return (flag);
 }
@@ -56,28 +56,6 @@ bool	is_shadow(t_minirt	*minirt)
 	vec_normalized(&dir);
 	vec_sub(dir, ori, &shadow);
  	return (inter(minirt, shadow, &timmy));
-}
-
-float	compute_light(t_minirt	*minirt, t_coo	vec, int color)
-{
-	t_coo	nl;
-	float	len;
-	float	gain;
-	float	coeff;
-
-	vec.x *= vec.len;
-	vec.y *= vec.len;
-	vec.z *= vec.len;
-	vec_sub(minirt->light->coo, vec, &nl);
-	len = powf(vec_length(nl), 2);
-	vec_normalized(&nl);
-	vec_normalized(&vec);
-	gain = vec_dot_product(nl, vec);
-	// printf("%f\n", gain);
-	coeff = 0;
-	if (gain > 0)
-		coeff = minirt->light->bright * fabsf(gain) * 1000 / (4.0 * M_PI * len);
-	return (color * coeff);
 }
 
 
@@ -114,7 +92,7 @@ void	ray_tracing(t_minirt	*minirt)
 			if (inter(minirt, minirt->ray, &scene->color))
 			{
 				color = prod_colors(scale_colors(minirt->ambient->rgb, minirt->ambient->ratio), scene->color);
-				color = c_add(color, !is_shadow(minirt) * compute_light(minirt, minirt->ray, scene->color));
+				color = c_add(color, /* is_shadow(minirt) */ compute_light(minirt, minirt->ray, scene->color));
 				// printf("%d\n", color);
 				// color = scene->color;
 			}

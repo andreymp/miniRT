@@ -17,11 +17,13 @@ SRCS =	src/main.c \
 		grafics/window.c \
 		src/miniRT.c \
 		grafics/vector.c \
+		grafics/vec_oper.c \
 		grafics/RT.c \
 		grafics/sphere.c \
 		grafics/plane.c \
 		grafics/cylinder.c \
 		grafics/scene.c \
+		grafics/light.c \
 
 INC	= 	libft/libft.h \
 		minilibx/mlx.h \
@@ -47,13 +49,17 @@ $(OBJS_DIR)/%.o:		%.c $(INC)
 									$(OBJS_DIR)/utils \
 									$(OBJS_DIR)/parsing \
 									$(OBJS_DIR)/grafics
-						$(CC) $(CFLAGS) -c $< -o $@
+						@$(CC) $(CFLAGS) -c $< -o $@
 
 all:			$(NAME)
 
 $(NAME):		$(addprefix $(OBJS_DIR)/, $(OBJS))
-				make -C ./minilibx/
-				$(CC) $(CFLAGS) $(addprefix $(OBJS_DIR)/, $(OBJS)) $(FRAMEWORKS) $(ACTIVATE_LIBS) -o $(NAME)
+				@echo "\033[0;32mObject files compiled\033[0m"
+				@make -C ./minilibx/
+				@echo "\033[0;32mMinilibx compiled\033[0m"
+				@$(CC) $(CFLAGS) $(addprefix $(OBJS_DIR)/, $(OBJS)) $(FRAMEWORKS) $(ACTIVATE_LIBS) -o $(NAME)
+				@echo "\033[0;32mBinary file builded\033[0m"
+				@echo "\033[1;32mDone\033[0m"
 
 clean:
 				@$(RM) $(OBJS_DIR)

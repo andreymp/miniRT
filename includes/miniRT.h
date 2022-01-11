@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:40:19 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/10 21:15:20 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/11 18:22:18 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,12 @@ typedef struct s_scene
 	int			color;
 }			t_scene;
 
-typedef struct s_ray
+typedef struct s_roots
 {
-	// float t;
-	t_coo	pos;
-	t_coo	dir;
-}			t_ray;
+	float	t1;
+	float	t2;
+	bool	exist;
+}			t_roots;
 
 typedef struct s_minirt
 {
@@ -191,11 +191,17 @@ t_vplane	*get_view_plane(float width, float height, int fov);
 bool		sphere_intersection(t_coo	vec, t_minirt	*minirt, int *color);
 void		ray_tracing(t_minirt	*minirt);
 bool		plane_intersection(t_minirt	*minirt, t_coo	vec, int *color);
-bool		cylinder_intersection(t_minirt	*minirt, t_coo	vec);
+bool		cylinder_intersection(t_minirt *rt, t_coo ray, int *color);
 float		ft_min(float t1, float t2);
 int			get_ambient_color(t_rgb	rgb, float ratio);
 int			c_add(int c1, int c2);
 int			scale_colors(t_rgb	rgb, float f);
 int			prod_colors(int color1, int color2);
+int			scale_int(int color, float f);
+t_coo		vec_mul(t_coo v, float t);
+t_coo		vec_add(t_coo v1, t_coo v2);
+t_coo   	v_scale(t_coo v, float f);
+float		dis(float a, float b, float c);
+float		compute_light(t_minirt	*minirt, t_coo	vec, int color);
 
 #endif
