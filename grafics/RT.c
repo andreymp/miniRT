@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 13:48:02 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/11 20:39:12 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/12 19:51:58 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,29 @@ bool	inter(t_minirt	*minirt, t_coo	vec, int	*color)
 	flag = false;
 	while (pl)
 	{
-		flag |= plane_intersection(minirt, vec, color);
+		flag |= plane_intersection(minirt, pl, vec, color);
 		pl = pl->next;		
 	}
 	while (sp)
 	{
-		flag |= sphere_intersection(vec, minirt, color);
+		flag |= sphere_intersection(vec, minirt, sp, color);
 		sp = sp->next;
 	}
 	while (cy)
 	{
-		flag |= cylinder_intersection(minirt, vec, color);
+		flag |= cylinder_intersection(minirt, cy, vec, color);
 		cy = cy->next;
 	}
 	return (flag);
 }
 
-bool	is_shadow(t_minirt	*minirt)
+bool	in_shadow(t_minirt	*minirt, int	*color)
 {
- 	t_coo	ori;
-	t_coo	dir;
 	t_coo	shadow;
-	int		timmy;
 
- 	new_vector(minirt->ray.x * minirt->ray.len * minirt->ray.x * 1e-4
-	 	, minirt->ray.y * minirt->ray.len * minirt->ray.y * 1e-4
-		, minirt->ray.z * minirt->ray.len * minirt->ray.z * 1e-4, &ori);
-	vec_sub(minirt->light->coo, ori, &dir);
-	vec_normalized(&dir);
-	vec_sub(dir, ori, &shadow);
- 	return (inter(minirt, shadow, &timmy));
+	vec_sub(minirt->light->coo, vec_mul(minirt->ray, minirt->ray.len), &shadow);
+	vec_normalized(&shadow);
+	return (inter(minirt, shadow, color));
 }
 
 
@@ -72,8 +65,6 @@ void	ray_tracing(t_minirt	*minirt)
 	vplane = get_view_plane(scene->width, scene->height, minirt->camera->fov);
 	if (!vplane)
 		exit_fatal(minirt, "Allocation failed");
-	// make_color(minirt->plane->rgb, &minirt->plane->rgb.color);
-	// make_color(minirt->cylinder->rgb, &minirt->cylinder->rgb.color);
 	make_color(minirt->ambient->rgb, &minirt->ambient->rgb.color);
 	minirt->y_angle = scene->height / 2;
 	coo.y = 0;
@@ -88,13 +79,11 @@ void	ray_tracing(t_minirt	*minirt)
 			new_vector(minirt->x_ray, minirt->y_ray, -1.0, &minirt->ray);
 			minirt->ray.len = vec_length(minirt->ray);
 			vec_normalized(&minirt->ray);
-			color = 0; // get_ambient_color(minirt->ambient->rgb, minirt->ambient->ratio);
+			color = 0;
 			if (inter(minirt, minirt->ray, &scene->color))
 			{
-				color = prod_colors(scale_colors(minirt->ambient->rgb, minirt->ambient->ratio), scene->color);
-				color = c_add(color, /* is_shadow(minirt) */ compute_light(minirt, minirt->ray, scene->color));
-				// printf("%d\n", color);
-				// color = scene->color;
+				color = prod_colors(scale_int(minirt->ambient->rgb.color, minirt->ambient->ratio), scene->color);
+				color = c_add(color, compute_light(minirt, minirt->ray, scene->color));
 			}
 			mlx_pixel_put(minirt->window->mlx ,minirt->window->win, coo.x, coo.y, color);
 			coo.x++;

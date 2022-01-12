@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:13:04 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/11 13:12:53 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:26:32 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,27 @@ t_roots	find_root(t_minirt *rt, t_coo ray, t_coo oc)
 	return (r);
 }
 
-bool	cylinder_intersection(t_minirt *rt, t_coo ray, int *color)
+bool	cylinder_intersection(t_minirt *rt, t_cylinder	*cy, t_coo ray, int *color)
 {
 	t_roots	roots;
 	t_coo	oc;
 	t_coo	inter[2];
 	float	h;
 
-	vec_sub(rt->cylinder->coo, rt->camera->coo, &oc);
+	vec_sub(cy->coo, rt->camera->coo, &oc);
 	roots = find_root(rt, ray, oc);
 	if (roots.exist == false)
 		return (false);
-	vec_sub(calc(ray, roots.t1), rt->cylinder->coo, &inter[0]);
-	vec_sub(calc(ray, roots.t2), rt->cylinder->coo, &inter[1]);
-	h = vec_dot_product(inter[0], rt->cylinder->vector);
-	if (h > rt->cylinder->height / 2 || h < -rt->cylinder->height / 2)
+	vec_sub(calc(ray, roots.t1), cy->coo, &inter[0]);
+	vec_sub(calc(ray, roots.t2), cy->coo, &inter[1]);
+	h = vec_dot_product(inter[0], cy->vector);
+	if (h > cy->height / 2 || h < -cy->height / 2)
 		roots.t1 = 0;
-	h = vec_dot_product(inter[1], rt->cylinder->vector);
-	if (h > rt->cylinder->height / 2 || h < -rt->cylinder->height / 2)
+	h = vec_dot_product(inter[1], cy->vector);
+	if (h > cy->height / 2 || h < -cy->height / 2)
 		roots.t2 = 0;
 	roots.t1 = ft_min(roots.t1, roots.t2);
 	if (roots.t1 > 0)
-		make_color(rt->cylinder->rgb, color);
+		make_color(cy->rgb, color);
 	return (roots.t1 > 0);
 }

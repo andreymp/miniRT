@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:43:06 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/07 14:48:26 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/12 18:41:23 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,14 @@ float	ft_atof(char	*str)
 	while (*(str + i) && ft_isdigit(*(str + i)))
 		i++;
 	if (*(str + i) == ' ' || *(str + i) == ',')
+	{
+		if (*str == '-')
+			return ((float) -integral);
 		return ((float) integral);
+	}
 	value = (float) integral;
 	fraction = 0.1;
 	i++;
-	
 	while (*(str + i) && ft_isdigit(*(str + i)))
 	{
 		value += (*(str + i++) - '0') * fraction;

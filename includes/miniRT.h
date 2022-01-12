@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:40:19 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/11 18:22:18 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:29:54 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,10 +188,10 @@ float		vec_length(t_coo	vec);
 void		vec_normalized(t_coo	*vec);
 float		vec_dot_product(t_coo	vec1, t_coo	vec2);
 t_vplane	*get_view_plane(float width, float height, int fov);
-bool		sphere_intersection(t_coo	vec, t_minirt	*minirt, int *color);
+bool		sphere_intersection(t_coo vec, t_minirt *rt, t_sphere	*sp, int *color);
 void		ray_tracing(t_minirt	*minirt);
-bool		plane_intersection(t_minirt	*minirt, t_coo	vec, int *color);
-bool		cylinder_intersection(t_minirt *rt, t_coo ray, int *color);
+bool		plane_intersection(t_minirt	*minirt, t_plane	*pl, t_coo	vec, int *color);
+bool		cylinder_intersection(t_minirt *rt, t_cylinder	*cy, t_coo ray, int *color);
 float		ft_min(float t1, float t2);
 int			get_ambient_color(t_rgb	rgb, float ratio);
 int			c_add(int c1, int c2);

@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 14:33:31 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/10 21:27:50 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:23:38 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ float ft_min(float t1, float t2)
     return (0);
 }
 
-bool	sphere_intersection(t_coo vec, t_minirt *rt, int *color)
+bool	sphere_intersection(t_coo vec, t_minirt *rt, t_sphere	*sp, int *color)
 {
     t_coo oc;
     t_coeff c;
@@ -41,10 +41,10 @@ bool	sphere_intersection(t_coo vec, t_minirt *rt, int *color)
     float t1;
     float t2;
 
-    vec_sub(rt->camera->coo, rt->sphere->coo ,&oc);
+    vec_sub(rt->camera->coo, sp->coo ,&oc);
     c.a = vec_dot_product(vec, vec);
     c.b = 2 * (vec_dot_product(oc, vec));
-    c.c = vec_dot_product(oc, oc) - (rt->sphere->diameter/2 * rt->sphere->diameter/2);
+    c.c = vec_dot_product(oc, oc) - (sp->diameter/2 * sp->diameter/2);
     disc = dis(c.a, c.b, c.c);
     // printf("disc = %f\n", disc);
     // printf("a = %f b = %f c = %f\n", c.a, c.b, c.c);
@@ -55,6 +55,6 @@ bool	sphere_intersection(t_coo vec, t_minirt *rt, int *color)
     t2 = (-c.b - sqrtf(disc)) / (2 * c.a);
     t1 = ft_min(t1, t2);
 	if (t1 >= 0)
-		make_color(rt->sphere->rgb, color);
+		make_color(sp->rgb, color);
     return (t1 >= 0);
 }
