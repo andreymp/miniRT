@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:40:19 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/13 19:08:29 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 20:13:17 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # define WIDTH  1000
 
 # define ESC 53
+# define UP 126
+# define DOWN 125
 
 # define E 0.000000001
 
@@ -210,5 +212,7 @@ float		dis(float a, float b, float c);
 float		compute_light(t_minirt	*minirt, t_coo	vec, int color);
 int			plane_utils(char	*str, int i,
 				t_minirt	**minirt, t_plane	*new);
+void		setup_control(t_minirt *rt);
+void		scale_diam_rad(int button, t_minirt *rt);
 
 #endif

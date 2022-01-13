@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 12:19:14 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/13 19:10:28 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 20:03:11 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ bool	check_float(char	*str)
 void	mini_rt(t_minirt	*minirt)
 {
 	ray_tracing(minirt);
+	setup_control(minirt);
 	mlx_loop(minirt->window->mlx);
 }
