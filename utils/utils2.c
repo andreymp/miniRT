@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:10:52 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/11 17:21:07 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:22:08 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	check_color(int	*portion)
 		*portion = 255;
 }
 
-int			c_add(int c1, int c2)
+int	c_add(int c1, int c2)
 {
 	int		r;
 	int		g;
@@ -50,7 +50,7 @@ int	scale_int(int color, float f)
 	return (r << 16 | g << 8 | b);
 }
 
-int	scale_colors(t_rgb	rgb, float	f)
+int	scale_colors(t_rgb rgb, float f)
 {
 	int	color;
 
@@ -64,8 +64,9 @@ int	prod_colors(int color1, int color2)
 	int	g;
 	int	b;
 
-	r = ((float) (color1 >> 16) / 255) * ((float) (color2 >> 16) / 255) * 255;
-	g = ((float)( (color1 >> 8) & 255) / 255) * ((float) ((color2 >> 8) & 255) / 255) * 255;
-	b = ((float) (color1 & 255) / 255) * ((float) (color2 & 255) / 255) * 255;
+	r = ((float)(color1 >> 16) / 255) * ((float)(color2 >> 16) / 255) * 255;
+	g = ((float)((color1 >> 8) & 255) / 255)
+		* ((float)((color2 >> 8) & 255) / 255) * 255;
+	b = ((float)(color1 & 255) / 255) * ((float)(color2 & 255) / 255) * 255;
 	return ((r << 16) | (g << 8) | b);
 }

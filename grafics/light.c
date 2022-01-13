@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 18:12:30 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/12 19:31:01 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:09:55 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static float	count_diffuse(t_minirt	*minirt, t_coo vec)
 	t_coo	nl;
 	float	acos_angle;
 	float	diffuse;
-	
+
 	vec_sub(minirt->light->coo, vec_mul(vec, vec.len), &nl);
 	vec_normalized(&nl);
 	acos_angle = vec_dot_product(nl, vec);
 	diffuse = 0;
 	if (acos_angle > 0.0)
-		diffuse = acos_angle * minirt->light->bright;
+		diffuse = acos_angle * minirt->light->bright / minirt->ambient->ratio;
 	return (diffuse);
 }
 
@@ -32,8 +32,8 @@ static t_coo	reflection(t_coo i, t_coo n)
 	float	prod;
 
 	prod = -2.0 * vec_dot_product(i, n);
-	return  (vec_add(i, vec_mul(n, prod)));
-} 
+	return (vec_add(i, vec_mul(n, prod)));
+}
 
 float	count_specular(t_minirt	*minirt, t_coo vec)
 {
@@ -58,14 +58,8 @@ float	compute_light(t_minirt	*minirt, t_coo	vec, int color)
 	int	spec;
 	int	tmp;
 
-	// vec.x *= vec.len;
-	// vec.y *= vec.len;
-	// vec.z *= vec.len;
 	diff = scale_int(color, count_diffuse(minirt, vec));
 	tmp = count_specular(minirt, vec);
-	// if (tmp)
 	spec = c_add(scale_int(0x0ffffff, count_specular(minirt, vec)), color);
-	// else
-	//spec = scale_int(color, count_specular(minirt, vec));
-	return (c_add(diff, spec));
+	return (diff);
 }

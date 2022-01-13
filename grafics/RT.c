@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 13:48:02 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/12 19:51:58 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:17:25 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ bool	inter(t_minirt	*minirt, t_coo	vec, int	*color)
 	t_sphere	*sp;
 	t_cylinder	*cy;
 
-
 	pl = minirt->plane;
 	sp = minirt->sphere;
 	cy = minirt->cylinder;
@@ -27,7 +26,7 @@ bool	inter(t_minirt	*minirt, t_coo	vec, int	*color)
 	while (pl)
 	{
 		flag |= plane_intersection(minirt, pl, vec, color);
-		pl = pl->next;		
+		pl = pl->next;
 	}
 	while (sp)
 	{
@@ -42,32 +41,33 @@ bool	inter(t_minirt	*minirt, t_coo	vec, int	*color)
 	return (flag);
 }
 
-bool	in_shadow(t_minirt	*minirt, int	*color)
-{
-	t_coo	shadow;
+// bool	in_shadow(t_minirt	*minirt, int	*color)
+// {
+// 	t_coo	shadow;
+// 	t_coo	dir;
+// 	float	len;
 
-	vec_sub(minirt->light->coo, vec_mul(minirt->ray, minirt->ray.len), &shadow);
-	vec_normalized(&shadow);
-	return (inter(minirt, shadow, color));
+// 	vec_sub(minirt->light->coo, vec_mul(minirt->ray, minirt->ray.len), &dir);
+// 	vec_sub(dir, minirt->light->coo, &shadow);
+// 	len = vec_length(shadow) - 1e-4f;
+// 	vec_normalized(&shadow);
+// 	// len = inter(minirt, shadow, color);
+// 	// if (len > 0 && len < vec_length(shadow) - 1e-3)
+// 	// 	return (true);
+// 	return (inter(minirt, shadow, color));
+// }
+
+static void	iter(float *a, float *b)
+{
+	(*a)++;
+	(*b)--;
 }
 
-
-void	ray_tracing(t_minirt	*minirt)
+static void	run(t_minirt	*minirt, t_coo	coo,
+t_scene	*scene, t_vplane	*vplane)
 {
-	t_vplane	*vplane;
-	t_scene		*scene;
-	t_coo		coo;
-	int			color;
+	int	color;
 
-	scene = init_scene(minirt);
-	if (!scene)
-		exit_fatal(minirt, "Allocation failed");
-	vplane = get_view_plane(scene->width, scene->height, minirt->camera->fov);
-	if (!vplane)
-		exit_fatal(minirt, "Allocation failed");
-	make_color(minirt->ambient->rgb, &minirt->ambient->rgb.color);
-	minirt->y_angle = scene->height / 2;
-	coo.y = 0;
 	while (minirt->y_angle >= -scene->height / 2)
 	{
 		minirt->y_ray = minirt->y_angle * vplane->y_pixel;
@@ -81,15 +81,34 @@ void	ray_tracing(t_minirt	*minirt)
 			vec_normalized(&minirt->ray);
 			color = 0;
 			if (inter(minirt, minirt->ray, &scene->color))
-			{
-				color = prod_colors(scale_int(minirt->ambient->rgb.color, minirt->ambient->ratio), scene->color);
-				color = c_add(color, compute_light(minirt, minirt->ray, scene->color));
-			}
-			mlx_pixel_put(minirt->window->mlx ,minirt->window->win, coo.x, coo.y, color);
+				color = c_add(prod_colors(scale_int(minirt->ambient->rgb.color,
+								minirt->ambient->ratio), scene->color),
+						compute_light(minirt, minirt->ray, scene->color));
+			my_mlx_pixel_put(minirt->window, coo.x, coo.y, color);
 			coo.x++;
 			minirt->x_angle++;
 		}
-		coo.y++;
-		minirt->y_angle--;
+		iter(&coo.y, &minirt->y_angle);
 	}
+}
+
+void	ray_tracing(t_minirt	*minirt)
+{
+	t_vplane	*vplane;
+	t_scene		*scene;
+	t_coo		coo;
+
+	scene = init_scene(minirt);
+	if (!scene)
+		exit_fatal(minirt, "Allocation failed");
+	vplane = get_view_plane(scene->width, scene->height, minirt->camera->fov);
+	if (!vplane)
+		exit_fatal(minirt, "Allocation failed");
+	make_color(minirt->ambient->rgb, &minirt->ambient->rgb.color);
+	minirt->y_angle = scene->height / 2;
+	coo.y = 0;
+	do_init_image(minirt->window);
+	run(minirt, coo, scene, vplane);
+	mlx_put_image_to_window(minirt->window->mlx, minirt->window->win,
+		minirt->window->image, 0, 0);
 }

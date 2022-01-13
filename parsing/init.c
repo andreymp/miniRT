@@ -6,33 +6,33 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:55:57 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/12 17:26:16 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:10:16 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-t_vplane	*get_view_plane(float width, float height, int __unused fov)
+t_vplane	*get_view_plane(float width, float height, int fov)
 {
-    t_vplane	*vplane;
-    float		aspect_ratio;
+	t_vplane	*vplane;
+	float		aspect_ratio;
 
-    vplane = (t_vplane *) malloc(sizeof(t_vplane));
-    if (!vplane)
-        return(NULL);
-    aspect_ratio = width / height;
-    vplane->width = tanf(fov / 2 * (M_PI / 180));
+	vplane = (t_vplane *) malloc(sizeof(t_vplane));
+	if (!vplane)
+		return (NULL);
+	aspect_ratio = width / height;
+	vplane->width = tanf(fov / 2 * (M_PI / 180));
 	vplane->width *= 2;
-    vplane->height = vplane->width / aspect_ratio;
-    vplane->x_pixel = vplane->width / width;
-    vplane->y_pixel = vplane->height / height;
-    return (vplane);
+	vplane->height = vplane->width / aspect_ratio;
+	vplane->x_pixel = vplane->width / width;
+	vplane->y_pixel = vplane->height / height;
+	return (vplane);
 }
 
 bool	init_coo(char	*str, t_coo	*coo)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!check_float(str))
 		return (false);

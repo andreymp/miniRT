@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:43:06 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/12 18:41:23 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:44:02 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	push_plane(t_plane	**plane, t_plane	*new)
 {
 	t_plane	*tmp;
-	
+
 	if (!*plane)
 		*plane = new;
 	else
@@ -57,29 +57,11 @@ void	push_sphere(t_sphere	**sphere, t_sphere	*new)
 	}
 }
 
-bool	check_float(char	*str)
+static float	ret_value(float value, char min)
 {
-	int	i;
-
-	i = 0;
-	if (*(str + i) == '-')
-		i++;
-	while (*(str + i) && ft_isdigit(*(str + i)))
-		i++;
-	if (!*(str + i))
-		return (false);
-	if (*(str + i) == ' ' || *(str + i) == ',')
-		return (true);
-	if (*(str + i++) == '.')
-	{
-		while (*(str + i) && ft_isdigit(*(str + i)))
-			i++;
-		if (!*(str + i))
-			return (false);
-		if (*(str + i) == ' ' || *(str + i) == ',')
-			return (true);
-	}
-	return (false);
+	if (min == '-')
+		return (-value);
+	return (value);
 }
 
 float	ft_atof(char	*str)
@@ -96,11 +78,7 @@ float	ft_atof(char	*str)
 	while (*(str + i) && ft_isdigit(*(str + i)))
 		i++;
 	if (*(str + i) == ' ' || *(str + i) == ',')
-	{
-		if (*str == '-')
-			return ((float) -integral);
-		return ((float) integral);
-	}
+		return (ret_value((float) integral, *str));
 	value = (float) integral;
 	fraction = 0.1;
 	i++;

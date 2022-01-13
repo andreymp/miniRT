@@ -6,11 +6,11 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 20:05:25 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 17:24:12 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:09:18 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/miniRT.h"
+#include "../includes/miniRT.h"
 
 static bool	check_sphere(t_sphere	*sphere)
 {
@@ -27,6 +27,29 @@ static bool	check_cylinder(t_cylinder	*cylinder)
 	return (check_rgb(cylinder->rgb) && check_vector(cylinder->vector));
 }
 
+static bool	make_flag_figure(t_plane	*pl, t_sphere	*sp, t_cylinder	*cy)
+{
+	bool	flag_figure;
+
+	flag_figure = true;
+	while (pl)
+	{
+		flag_figure &= check_plane(pl);
+		pl = pl->next;
+	}
+	while (sp)
+	{
+		flag_figure &= check_sphere(sp);
+		sp = sp->next;
+	}
+	while (cy)
+	{
+		flag_figure &= check_cylinder(cy);
+		cy = cy->next;
+	}
+	return (flag_figure);
+}
+
 bool	total_check(t_minirt	*minirt)
 {
 	bool		flag_option;
@@ -35,26 +58,12 @@ bool	total_check(t_minirt	*minirt)
 	t_plane		*pl;
 	t_cylinder	*cy;
 
-	flag_figure = true;
 	sp = minirt->sphere;
 	pl = minirt->plane;
 	cy = minirt->cylinder;
-	flag_option = check_ambient(minirt->ambient) 
-		&& check_camera(minirt->camera) && check_light(minirt->light);
-	while (pl)
-	{
-		flag_figure = flag_figure && check_plane(pl);
-		pl = pl->next;
-	}
-	while (sp)
-	{
-		flag_figure = flag_figure && check_sphere(sp);
-		sp = sp->next;
-	}
-	while (cy)
-	{
-		flag_figure = flag_figure && check_cylinder(cy);
-		cy = cy->next;
-	}
+	flag_option = check_ambient(minirt->ambient);
+	flag_option &= check_camera(minirt->camera);
+	flag_option &= check_light(minirt->light);
+	flag_figure = make_flag_figure(pl, sp, cy);
 	return (flag_figure && flag_option);
 }

@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:42:05 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/06 12:07:22 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:19:30 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	parse_line(char	*line, t_minirt	**minirt)
 	char	*trimmed_copy;
 
 	trimmed_copy = ft_strtrim(line, "\n");
-	// puts(trimmed_copy);
 	free(line);
 	i = skip_spaces(trimmed_copy, 0);
 	if (!*(trimmed_copy + i))

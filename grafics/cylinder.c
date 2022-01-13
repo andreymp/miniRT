@@ -6,11 +6,11 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:13:04 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/12 15:26:32 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:52:32 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/miniRT.h"
+#include "../includes/miniRT.h"
 
 t_coo	calc(t_coo ray, float f)
 {
@@ -47,7 +47,8 @@ t_roots	find_root(t_minirt *rt, t_coo ray, t_coo oc)
 	return (r);
 }
 
-bool	cylinder_intersection(t_minirt *rt, t_cylinder	*cy, t_coo ray, int *color)
+bool	cylinder_intersection(t_minirt *rt, t_cylinder	*cy
+, t_coo ray, int *color)
 {
 	t_roots	roots;
 	t_coo	oc;

@@ -6,13 +6,14 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:21:40 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/12 15:29:40 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:53:41 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-bool	plane_intersection(t_minirt	*minirt, t_plane	*pl, t_coo	vec, int *color)
+bool	plane_intersection(t_minirt	*minirt, t_plane	*pl
+, t_coo	vec, int *color)
 {
 	float	denom;
 	float	t;
@@ -21,7 +22,7 @@ bool	plane_intersection(t_minirt	*minirt, t_plane	*pl, t_coo	vec, int *color)
 
 	vec_sub(minirt->camera->coo, pl->coo, &cam_pl);
 	denom = vec_dot_product(cam_pl, vec);
-	if (fabsf(denom) > 1e-6)
+	if (fabsf(denom) > 1e-4)
 	{
 		vec_sub(pl->coo, minirt->ray, &tmp);
 		t = vec_dot_product(tmp, cam_pl);

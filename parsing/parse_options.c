@@ -6,16 +6,27 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:19:33 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/05 18:46:52 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:27:29 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
+int	plane_utils(char	*str, int i,
+t_minirt	**minirt, t_plane	*new)
+{
+	while (*(str + i) != ' ')
+		i++;
+	i = skip_spaces(str, i);
+	if (!*(str + i))
+		plane_exit(new, *minirt, "Error");
+	return (i);
+}
+
 void	make_ambient(t_minirt	**minirt, char	*str)
 {
 	int	i;
-	
+
 	(*minirt)->ambient = (t_ambient *) malloc(sizeof(t_ambient));
 	if (!(*minirt)->ambient)
 		exit_fatal(*minirt, "Allocation failed");
@@ -36,8 +47,8 @@ void	make_ambient(t_minirt	**minirt, char	*str)
 
 void	make_camera(t_minirt	**minirt, char	*str)
 {
-	int i;
-	
+	int	i;
+
 	(*minirt)->camera = (t_camera *) malloc(sizeof(t_camera));
 	if (!(*minirt)->camera)
 		exit_fatal(*minirt, "Allocation failed");
@@ -88,5 +99,5 @@ void	make_light(t_minirt	**minirt, char	*str)
 		exit_fatal(*minirt, "Error");
 	i++;
 	while (*(str + i) && ft_isdigit(*(str + i)))
-		i++;	
+		i++;
 }

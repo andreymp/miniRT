@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:40:19 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/12 15:29:54 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:08:29 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,17 @@ typedef struct s_plane
 	struct s_plane	*next;
 }				t_plane;
 
-typedef struct	s_cylinder
+typedef struct s_cylinder
 {
 	t_coo				coo;
 	t_coo				vector;
 	float				diameter;
 	float				height;
 	t_rgb				rgb;
-	struct	s_cylinder	*next;
+	struct s_cylinder	*next;
 }				t_cylinder;
 
-typedef struct	s_window
+typedef struct s_window
 {
 	void	*mlx;
 	void	*win;
@@ -100,7 +100,7 @@ typedef struct	s_window
 	int		endian;
 }				t_window;
 
-typedef struct	s_vplane
+typedef struct s_vplane
 {
 	float	width;
 	float	height;
@@ -146,7 +146,7 @@ typedef struct s_minirt
 	float		x_ray;
 	float		y_ray;
 	float		x_angle;
-    float		y_angle;
+	float		y_angle;
 	t_coo		ray;
 }				t_minirt;
 
@@ -168,9 +168,11 @@ bool		init_coo(char	*str, t_coo	*coo);
 void		push_plane(t_plane	**plane, t_plane	*new);
 void		plane_exit(t_plane	*plane, t_minirt	*minirt, char	*message);
 void		push_cylinder(t_cylinder	**cylinder, t_cylinder	*new);
-void		cylinder_exit(t_cylinder	*cylinder, t_minirt	*minirt, char	*message);
+void		cylinder_exit(t_cylinder	*cylinder,
+				t_minirt	*minirt, char	*message);
 void		push_sphere(t_sphere	**sphere, t_sphere	*new);
-void		sphere_exit(t_sphere	*sphere, t_minirt	*minirt, char	*message);
+void		sphere_exit(t_sphere	*sphere,
+				t_minirt	*minirt, char	*message);
 bool		check_rgb(t_rgb	rgb);
 bool		check_vector(t_coo	vector);
 bool		check_ambient(t_ambient	*ambient);
@@ -188,10 +190,13 @@ float		vec_length(t_coo	vec);
 void		vec_normalized(t_coo	*vec);
 float		vec_dot_product(t_coo	vec1, t_coo	vec2);
 t_vplane	*get_view_plane(float width, float height, int fov);
-bool		sphere_intersection(t_coo vec, t_minirt *rt, t_sphere	*sp, int *color);
+bool		sphere_intersection(t_coo vec, t_minirt *rt,
+				t_sphere	*sp, int *color);
 void		ray_tracing(t_minirt	*minirt);
-bool		plane_intersection(t_minirt	*minirt, t_plane	*pl, t_coo	vec, int *color);
-bool		cylinder_intersection(t_minirt *rt, t_cylinder	*cy, t_coo ray, int *color);
+bool		plane_intersection(t_minirt	*minirt,
+				t_plane	*pl, t_coo	vec, int *color);
+bool		cylinder_intersection(t_minirt *rt,
+				t_cylinder	*cy, t_coo ray, int *color);
 float		ft_min(float t1, float t2);
 int			get_ambient_color(t_rgb	rgb, float ratio);
 int			c_add(int c1, int c2);
@@ -200,8 +205,10 @@ int			prod_colors(int color1, int color2);
 int			scale_int(int color, float f);
 t_coo		vec_mul(t_coo v, float t);
 t_coo		vec_add(t_coo v1, t_coo v2);
-t_coo   	v_scale(t_coo v, float f);
+t_coo		v_scale(t_coo v, float f);
 float		dis(float a, float b, float c);
 float		compute_light(t_minirt	*minirt, t_coo	vec, int color);
+int			plane_utils(char	*str, int i,
+				t_minirt	**minirt, t_plane	*new);
 
 #endif

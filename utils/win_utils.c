@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 12:28:18 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/07 15:18:00 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:17:44 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	do_init_image(t_window *win)
 {
 	if (win->image)
 		mlx_destroy_image(win->mlx, win->image);
-	win->image = mlx_new_image(win->mlx, WIDTH, HEIGHT);
+	win->image = mlx_new_image(win->mlx, WIDTH + 1, HEIGHT + 1);
 	win->addr = mlx_get_data_addr(win->image, &win->pixel_bits,
 			&win->size_line, &win->endian);
 }

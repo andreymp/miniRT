@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:03:09 by jobject           #+#    #+#             */
-/*   Updated: 2022/01/05 17:05:02 by jobject          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:22:22 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	sphere_exit(t_sphere	*sphere, t_minirt	*minirt, char	*message)
 	exit_fatal(minirt, message);
 }
 
-void	cylinder_exit(t_cylinder	*cylinder, t_minirt	*minirt, char	*message)
+void	cylinder_exit(t_cylinder	*cylinder,
+t_minirt	*minirt, char	*message)
 {
 	free(cylinder);
 	exit_fatal(minirt, message);

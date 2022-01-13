@@ -34,7 +34,7 @@ OBJS = $(SRCS:.c=.o)
 OBJS_DIR = .obj
 
 CC	= gcc
-CFLAGS = -Wall -Wextra -Werror -o3
+CFLAGS = -Wall -Wextra -Werror -ofast
 RM	= rm -rf
 
 LD_FLAGS = -L libft -L minilibx
